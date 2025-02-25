@@ -1,0 +1,29 @@
+
+     [
+      {
+        "id": 1,
+        "name": "Graphite Art",
+        "amt": 1000,
+        "pic": "https://www.mydavinci.com/LG/x/860676008/SC.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Acrylic Art",
+        "amt": 2000,
+        "pic": "https://i.etsystatic.com/19244972/r/il/8e3ba1/2192572535/il_1140xN.2192572535_rg22.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Charcoal Art",
+        "amt": 1500,
+        "pic": "https://i.etsystatic.com/33571157/r/il/3c1c93/4593940941/il_794xN.4593940941_qesp.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Colored Art",
+        "amt": 2000,
+        "pic": "https://www.giftasketch.com/wp-content/uploads/2020/07/Color-pencil-drawing-of-girl.jpg"
+      }
+    ]
+  
+  

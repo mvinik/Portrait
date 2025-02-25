@@ -1,0 +1,50 @@
+[
+    {
+        "id":1,
+        "name":"Sreerag Ar",
+        "role":"Founder & CEO",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":2,
+        "name":"Prajoosha Cp",
+        "role":"Co-founder & Head of Content",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+     {
+        "id":3,
+        "name":"Swetha",
+        "role":"Operation Manager",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":4,
+        "name":"Ramya",
+        "role":"Accountant",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":5,
+        "name":"Sree Ram",
+        "role":"Content Creator",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":6,
+        "name":"Rajesh",
+        "role":"Packing & Shipping Manager",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":7,
+        "name":"Dinesh",
+        "role":"Designer",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "id":8,
+        "name":"Karthick",
+        "role":"Designer",
+        "pic":"https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNlb3xlbnwwfHwwfHx8MA%3D%3D"
+    }
+]

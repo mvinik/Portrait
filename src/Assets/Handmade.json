@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Personalised Premium Pencil Portrait Sketch",
+        "price": "₹ 2,399.00 INR - ₹ 13,799.00 INR",
+        "pic": "https://fabusframes.com/cdn/shop/files/premium_pencil_-2.jpg?v=1734415706&width=700"
+    },
+    {
+        "id": 2,
+        "name": "Portrait Made Using Word from Photos",
+        "price": "₹ 1,649.00 INR - ₹ 8,899.00 INR",
+        "pic": "https://fabusframes.com/cdn/shop/files/name_potrait_-_valentine_theme_1.jpg?v=1738387361&width=700"
+    },
+    {
+        "id": 3,
+        "name": "Color Pencil Portrait",
+        "price": "₹ 2,499.00 INR - ₹ 13,199.00 INR",
+        "pic": "https://fabusframes.com/cdn/shop/files/color_pencil_-_1.jpg?v=1734417381&width=400"
+    },
+    {
+        "id": 4,
+        "name": "Premium Pencil Custom Pet Portraits",
+        "price": "₹ 1,899.00 INR - ₹ 13,799.00 INR",
+        "pic": "https://fabusframes.com/cdn/shop/files/premium_pencil_pet_portrait_-_1.jpg?v=1734417950&width=400"
+    },
+    {
+        "id": 5,
+        "name": "Buy Acrylic Portrait Painting",
+        "price": "₹ 2,399.00 INR - ₹ 33,699.00 INR",
+        "pic": "https://fabusframes.com/cdn/shop/files/acrylic_painting-_3.jpg?v=1734416249&width=400"
+    },
+    {
+        "id": 6,
+        "name": "Portrait Made of Ball Pen from Photos",
+        "price": "₹ 1,799.00 INR - ₹ 14,699.00 INR",
+        "pic": "https://fabusframes.com/cdn/shop/files/pen_potrait_-_2.jpg?v=1734417561&width=700"
+    }
+]

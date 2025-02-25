@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Family Portrait from Multiple Photos- Digital Merge Portrait",
+        "price": "₹₹ 1,700.00 INR - ₹ 13,499.00 INR",
+        "pic1": "https://fabusframes.com/cdn/shop/files/digitalmerge_4.jpg?v=1734945149&width=400",
+        "pic2":"https://fabusframes.com/cdn/shop/files/digitalmerge_1.jpg?v=1734945149&width=900"
+    },
+    {
+        "id": 2,
+        "name": "Portrait Made Using Word from Photos",
+        "price": "₹ 1,649.00 INR - ₹ 8,899.00 INR",
+        "pic1": "https://fabusframes.com/cdn/shop/files/photo_to_art_4.jpg?v=1738064740&width=900",
+        "pic2":"https://fabusframes.com/cdn/shop/files/photo_to_art_1_486df265-6b5f-4af3-afa6-675ba169f8fa.jpg?v=1738059073&width=900"
+    },
+    {
+        "id": 3,
+        "name": "Color Pencil Portrait",
+        "price": "₹ 2,499.00 INR - ₹ 13,199.00 INR",
+        "pic1": "https://fabusframes.com/cdn/shop/files/caricature_3.jpg?v=1734946277&width=900",
+        "pic2":"https://fabusframes.com/cdn/shop/files/caricature_4.jpg?v=1734946277&width=900"
+    },
+    {
+        "id": 4,
+        "name": "Premium Pencil Custom Pet Portraits",
+        "price": "₹ 1,899.00 INR - ₹ 13,799.00 INR",
+        "pic1": "https://fabusframes.com/cdn/shop/files/scrible_2.jpg?v=1734946072&width=900",
+         "pic2": "https://fabusframes.com/cdn/shop/files/scrible_1.jpg?v=1734946072&width=900"
+    },
+    {
+        "id": 5,
+        "name": "Buy Acrylic Portrait Painting",
+        "price": "₹ 2,399.00 INR - ₹ 33,699.00 INR",
+        "pic1": "https://fabusframes.com/cdn/shop/files/simple_merge_4.jpg?v=1734945813&width=900",
+        "pic2":"https://fabusframes.com/cdn/shop/files/simple_merge_1.jpg?v=1734945813&width=900"
+    }
+    
+]
