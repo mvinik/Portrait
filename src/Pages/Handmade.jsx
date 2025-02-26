@@ -1,37 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; // Import Axios
+//import axios from 'axios'; // Import Axios
 import HMProducts from '../Components/HMProducts';
-
+import { useQuery } from '@tanstack/react-query';
 const Handmade = () => {
-  const [products, setProducts] = useState([]); // Initialize products state
-  const [loading, setLoading] = useState(true); // Track loading state
-  const [error, setError] = useState(null); // Track error state
 
-  useEffect(() => {
-    // Fetch data from the API
-    axios.get('https://test4-ayw7.onrender.com/api/paints?populate=image')
-      .then(response => {
-        setProducts(response.data.data); // Set products data
-        setLoading(false); // Set loading to false once data is fetched
-      })
-      .catch(err => {
-        setError(err.message); // Set error message if request fails
-        setLoading(false); // Set loading to false if error occurs
-      });
-  }, []);
+  const fetchProducts = async () => {
+    const res = await fetch('https://test4-ayw7.onrender.com/api/paints?filters[type][$eq]=handmade&populate=image');
+    if (!res.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    const data = await res.json();
+    return data.data;
+  };
 
-  // Render loading state
-  if (loading) {
+  const { data: products, error, isLoading } = useQuery({
+    queryKey: ['products'],  // Query key
+    queryFn: fetchProducts,  // The query function
+  });
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // Render error state
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error: {error.message}</div>;
   }
-  console.log(products)
-
+  
   return (
     <>
       <h6 className='text-sm p-5 ml-5'>

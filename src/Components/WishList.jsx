@@ -1,10 +1,15 @@
 // Wishlist.js
 import React, { useContext } from 'react';
-import { WishlistContext } from './WishlistProvider';
+import {cartContext } from './CartProvider';
 import { Link } from 'react-router-dom';
 
 const Wishlist = () => {
-  const { wishlist, removeWish } = useContext(WishlistContext);
+  const { wishlist, setWishlist } = useContext(cartContext);
+
+  const removeWish=(productId)=>{
+    console.log('Removing product with ID:', productId);
+    setWishlist((prevWish)=>prevWish.filter((product)=>product.id!== productId))
+}
 
   return (
     <div className="m-10">

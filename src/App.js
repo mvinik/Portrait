@@ -14,47 +14,52 @@ import CartProduct from './Components/CartProducts';
 import Register from './Pages/Register';
 import Products from './Pages/Products';
 import WishList from './Components/WishList';
-
+import Cart2 from './Components/CartPage';
 import CartProvider from './Components/CartProvider';
-import WishlistProvider from './Components/WishlistProvider';
+//import WishlistProvider from './Components/WishlistProvider';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Creating a new QueryClient instance
-
+const queryClient= new QueryClient()
 
 function App() {
   return (
     <div className="App">
       {/* Wrap your app with the QueryClientProvider to allow react-query to work */}
 
-        {/* CartProvider and WishlistProvider wrap the entire app to share the state */}
+        <QueryClientProvider client={queryClient}>
+          {/* CartProvider and WishlistProvider wrap the entire app to share the state */}
         <CartProvider>
           
-            <BrowserRouter>
-              {/* The Header is displayed on all pages */}
-              <Header />
+          <BrowserRouter>
+            {/* The Header is displayed on all pages */}
+            <Header />
 
-              {/* All the routes for different pages in your app */}
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/cartproduct" element={<CartProduct />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/handmade" element={<Handmade />} />
-                <Route path="/orderform" element={<OrderForm />} />
-                <Route path="/digital" element={<Digital />} />
-                <Route path="/wish" element={<WishList />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/ourstory" element={<OurStory />} />
-              </Routes>
+            {/* All the routes for different pages in your app */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/cartproduct" element={<CartProduct />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/handmade" element={<Handmade />} />
+              <Route path="/orderform" element={<OrderForm />} />
+              <Route path="/digital" element={<Digital />} />
+              <Route path="/wish" element={<WishList />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/ourstory" element={<OurStory />} />
+              <Route path="/cartpage" element={<Cart2/>} />
 
-              {/* The Footer is displayed on all pages */}
-              <Footer />
-            </BrowserRouter>
+            </Routes>
+
+            {/* The Footer is displayed on all pages */}
+            <Footer />
+          </BrowserRouter>
+
+      </CartProvider>
   
-        </CartProvider>
-    
+        </QueryClientProvider>
     </div>
   );
 }

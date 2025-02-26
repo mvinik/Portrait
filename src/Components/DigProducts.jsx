@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { cartContext } from './CartProvider';  // Import cart context
 import { data, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const HMProducts = ({ product }) => {
+const DigProducts = ({ product }) => {
   const { cart, setCart } = useContext(cartContext);  // Access cart and setCart from context
   const navCart = useNavigate();  // Hook for navigation
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
@@ -99,4 +99,4 @@ console.log(data1)
   );
 };
 
-export default HMProducts;
+export default DigProducts;

@@ -3,13 +3,15 @@ import  {cartContext} from './CartProvider';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-  const { cart ,removeProduct} = useContext(cartContext);
+  const { cart ,setCart} = useContext(cartContext);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setTotal(cart.reduce((acc, curr) => acc + parseFloat(curr.amt), 0));
   }, [cart]);
-
+ const removeProduct=(productId)=>{
+ setCart((pre)=>pre.filter((product)=>product.id !== productId))
+ }
   
   return (
    <>
@@ -46,6 +48,12 @@ const Cart = () => {
                 >
                   Remove From Cart
                 </button>
+                {/* <button
+                  onClick={() => removeProduct(product.id)}
+                  className="bg-red-800 rounded p-2 mt-1 hover:bg-red-700 transition duration-300"
+                >
+                  Remove From Cart
+                </button> */}
               </div>
             </div>
           ))}

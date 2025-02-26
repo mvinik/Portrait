@@ -15,7 +15,7 @@ const CartProvider = ({ children }) => {  // Now it receives children dynamicall
   // const [order, setOrder] = useState([]);
 
 
-   //store the data using local storage in cart page
+  //  store the data using local storage in cart page
   // useEffect(() => {
   //   const storedItem = JSON.parse(localStorage.getItem('cart'));
   //   if (storedItem) {
@@ -70,8 +70,39 @@ const CartProvider = ({ children }) => {  // Now it receives children dynamicall
   //   setCartproduct((prevCart) => prevCart.filter((c) => c.id !== productId));
   // };
 
+
+
+  //Wishlist provider
+   const [wishlist,setWishlist]=useState([])
+   const [wishcart,setWishcart]=useState([])
+  
+      useEffect(()=>{
+          const storedWishItem=JSON.parse(localStorage.getItem('wishlist'));
+          setWishlist(storedWishItem)
+      },[])
+  
+      useEffect(()=>{
+          localStorage.setItem('wishlist',JSON.stringify(wishlist))
+      },[wishlist])
+  
+      const addWish=(product)=>{
+          setWishlist((prevWish)=>[...prevWish,wishlist])
+      }
+       
+  
+      const removeWish=(productId)=>{
+          setWishlist((prevWish)=>prevWish.filter((product)=>product.id!== productId))
+      }
+
+      // const addWishCart=(product)=>{
+      //   setWishcart((precart)=>[...precart,wishcart])
+      // }
+      // const removeWishCart=(productId)=>{
+      //   setWishcart((precart)=>precart.filter((product)=>product.id!== productId))
+      // }
+  
   return (
-    <cartContext.Provider value={{ cart, setCart, removeProduct}}>
+    <cartContext.Provider value={{ cart, setCart, removeProduct,wishlist,setWishlist,addWish,removeWish,wishcart,setWishcart}}>
       {/* Dynamically rendering whatever components are passed as children */}
       {children}
     </cartContext.Provider>

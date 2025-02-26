@@ -1,11 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { assets } from '../Assets/assets';
-import { WishlistContext } from '../Components/WishlistProvider';
+import { cartContext} from '../Components/CartProvider'
 import { useContext } from 'react';
 const ChildAllProduct = ({product}) => {
     
-const {addWish}=useContext(WishlistContext)
+const {setWishlist,wishlist,cart,setCart}=useContext(cartContext)
+
+const addWish=()=>{
+  setWishlist([...wishlist,product])
+}
+
+const addWishCart=()=>{
+  setCart([...cart,product])
+}
+const removeWishCart =()=>{
+  setCart(cart.filter((c)=>c.id !== product.id))
+}
 
     const name=product.name.length > 15 ? product.name.substring(0,15):product.name;
   return (
@@ -21,11 +32,18 @@ const {addWish}=useContext(WishlistContext)
               <p><span className='font-semibold'>Price:</span> ${product.amt}</p>
             </div>
             <div className='mt-4 flex flex-row justify-center items-center'>
-              <button className='bg-blue-500 text-white mr-20 p-2 rounded'>Add To Cart</button>
+             {
+              cart.some((c)=>c.id === product.id) ? 
+              (<button
+              onClick={removeWishCart}> Remove</button>):
+              (<button
+              onClick={addWishCart}>Add</button>)
+
+             }
   
             <button ><Link to='/wish'>
             <img 
-            onClick={() => addWish(product)}
+            onClick={addWish}
             src={assets.wish}
             className='w-5 h-5  text-center'
              alt='wish'/></Link></button>

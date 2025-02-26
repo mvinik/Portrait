@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 
 
 function MobileMenu({ isMenuOpen, toggleMenu }) {
+
+  
+  // Retrieve user from localStorage
+  const user = JSON.parse(localStorage.getItem('user'));
   return (
     <div
       className={`fixed inset-0 bg-opacity-50 z-20 ${isMenuOpen ? 'block' : 'hidden'}`}
@@ -21,6 +25,14 @@ function MobileMenu({ isMenuOpen, toggleMenu }) {
           <button onClick={toggleMenu} className="text-gray-900 text-2xl">
             &times;
           </button>
+
+         
+        </div>
+        <div  className="flex justify-between items-center p-4">
+        {
+          user?
+          ( <span>Hello {user.username}!</span>):(<span></span>)
+         }
         </div>
         <nav>
           <ul className="flex flex-col space-y-6 p-4">
@@ -39,11 +51,7 @@ function MobileMenu({ isMenuOpen, toggleMenu }) {
                Our Story
               </a>
             </li>
-            <li>
-              <Link to="/login" className="hover:text-teal-800 transition duration-300">
-               Login
-              </Link>
-            </li>
+           
             <li>
               <Link to="/contact" className="hover:text-teal-800 transition duration-300">
                 Contact
@@ -54,6 +62,18 @@ function MobileMenu({ isMenuOpen, toggleMenu }) {
                 Products
               </Link>
             </li> 
+            {
+              user?(<li>
+                <Link to="/login" className="hover:text-teal-800 transition duration-300">
+                 logout
+                </Link>
+              </li>):
+              (<li>
+                <Link to="/login" className="hover:text-teal-800 transition duration-300">
+                 Login
+                </Link>
+              </li>)
+            }
           </ul>
         </nav>
       </aside>

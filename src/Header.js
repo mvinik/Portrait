@@ -1,8 +1,7 @@
-// Header.js
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
 import { assets } from './Assets/assets';
-import {cartContext} from './Components/CartProvider';
+import { cartContext } from './Components/CartProvider';
 import Search from './Pages/Search';
 import MobileMenu from './Components/MobileMenu';  // Import the MobileMenu component
 
@@ -10,13 +9,25 @@ function Header() {
   const { cart } = useContext(cartContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const navigate = useNavigate();  // Hook for redirection after logout
 
+  // Toggle for mobile menu
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const openSearchBar = () => setIsSearchOpen(true);
   const closeSearchBar = () => setIsSearchOpen(false);
 
- 
-  const userLoggedIn = false; // Assume you will use context or props for this.
+  // Retrieve user from localStorage
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  // Logout functionality
+  const handleLogout = () => {
+    // Remove user data and JWT token from localStorage
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
+
+    // Redirect the user to the login page after logging out
+    navigate('/login');
+  };
 
   return (
     <>
@@ -48,32 +59,40 @@ function Header() {
             <button onClick={openSearchBar} aria-label="Open Search" >
               <img src={assets.search} alt="search" className="w-5 h-5 filter brightness-0 invert" />
             </button>
-            {userLoggedIn ? (
-              <Link to="/profile" >
-                <img src={assets.profile} alt="profile" className="w-6 h-6 filter brightness-0 invert" />
-              </Link>
+
+            {/* Conditionally render login/logout button */}
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <span>{user.username}</span>
+                {/* Logout button */}
+                <button 
+                
+                onClick={handleLogout}
+                className="text-white hidden md:block">
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link to="/login" >
+                
                 <img src={assets.l3} alt="login" className="w-6 h-6 hidden md:block filter brightness-0 invert" />
               </Link>
             )}
-           <button>
-           <Link to="/cart" >
-              {cart.length > 0 && (
-                <span className="absolute top-1 right-12 md:top-1 md:right-4 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
-                  {cart.length}
-                </span>
-              )}
-              <img src={assets.c1} alt="cart" className="w-5 h-5 filter brightness-0 invert" />
-            </Link>
-          </button>
-          
-          
-         
-          
-          <button onClick={toggleMenu} aria-label="Toggle Mobile Menu">
+            
+            <button>
+              <Link to="/cartpage" >
+                {cart.length > 0 && (
+                  <span className="absolute top-1 right-12 md:top-1 md:right-4 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
+                    {cart.length}
+                  </span>
+                )}
+                <img src={assets.c1} alt="cart" className="w-5 h-5 filter brightness-0 invert" />
+              </Link>
+            </button>
+
+            <button onClick={toggleMenu} aria-label="Toggle Mobile Menu">
               <img src={assets.menu} alt="menu" className="md:hidden w-6 h-6 filter brightness-0 invert" />
-          </button>
+            </button>
           </div>
         </div>
       </header>
