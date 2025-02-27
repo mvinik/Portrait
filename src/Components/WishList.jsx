@@ -1,10 +1,9 @@
 // Wishlist.js
-import React, { useContext } from 'react';
-import {cartContext } from './CartProvider';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Wishlist = () => {
-  const { wishlist, setWishlist } = useContext(cartContext);
+  const [wishlist, setWishlist ] = useState();
 
   const removeWish=(productId)=>{
     console.log('Removing product with ID:', productId);

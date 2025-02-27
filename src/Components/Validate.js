@@ -1,24 +1,25 @@
-export default function validate(values){
-    let errors={}
-
-    if(!values.firstname.trim()){
-        errors.firstname="Firstname required"
+export default function validate(regData) {
+    let error = {};
+  
+    // Validate username
+    if (!regData.username || !regData.username.trim()) {
+      error.username = "Username required";
     }
-    if(!values.lastname.trim()){
-        errors.lastname="Lastname required"
+  
+    // Validate email
+    if (!regData.email || !regData.email.trim()) {
+      error.email = "Email required";
+    } else if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(regData.email)) {
+      error.email = "Email is invalid";
     }
-    if(!values.email.trim()){
-        errors.email="Email required"
+  
+    // Validate password
+    if (!regData.password || !regData.password.trim()) {
+      error.password = "Password required";
+    } else if (regData.password.length < 6) {
+      error.password = "Password needs to be 6 characters or more";
     }
-    else if (/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(values.email)) {
-        errors.email="Email is invalid"
-    }
-    if(!values.pass.trim()){
-        errors.pass="Password required"
-    }
-    else if(!values.pass.length > 6){
-        errors.pass="Password needs to be 6 characters or more"
-    }
-
-    return errors;
-}
+  
+    return error;
+  }
+  

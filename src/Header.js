@@ -47,6 +47,10 @@ function Header() {
                 <a href="/digital" className="hover:text-yellow-300">Digital Portraits</a>
               </li>
               <li>
+                <a href="/pet" className="hover:text-yellow-300">Pet Portraits
+                </a>
+              </li>
+              <li>
                 <a href="/ourstory" className="hover:text-yellow-300">Our Story</a>
               </li>
               <li>

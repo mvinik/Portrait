@@ -47,6 +47,10 @@ function MobileMenu({ isMenuOpen, toggleMenu }) {
               </a>
             </li>
             <li>
+                <a href="/pet" className="hover:text-yellow-300">Pet Portraits
+                </a>
+              </li>
+            <li>
               <a href="/ourstory" className="hover:text-teal-800 transition duration-300">
                Our Story
               </a>

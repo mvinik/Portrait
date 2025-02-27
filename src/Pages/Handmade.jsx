@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-//import axios from 'axios'; // Import Axios
 import HMProducts from '../Components/HMProducts';
 import { useQuery } from '@tanstack/react-query';
+
 const Handmade = () => {
 
   const fetchProducts = async () => {
@@ -15,8 +15,8 @@ const Handmade = () => {
   };
 
   const { data: products, error, isLoading } = useQuery({
-    queryKey: ['products'],  // Query key
-    queryFn: fetchProducts,  // The query function
+    queryKey: ['products'], 
+    queryFn: fetchProducts,  
   });
 
   if (isLoading) {
@@ -85,14 +85,13 @@ const Handmade = () => {
           </div>
 
           {/* Products */}
-          <div className='grid md:grid-cols-2 m-10 gap-5'>
+          <div className='grid grid-cols-1 md:grid-cols-2 m-20 gap-5 justify-center items-center'>
             {products.map((product) => (
               <HMProducts key={product.id} product={product} />
             ))}
           </div>
         </div>
       </div>
-      
     </>
   );
 };

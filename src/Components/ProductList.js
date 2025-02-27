@@ -7,6 +7,7 @@ import { useContext } from 'react';
 
 const ProductList = ({ product }) => {
   const { cartproduct, setCartproduct } = useContext(cartContext);
+  const name=product.name.length > 20 ? product.name.substring(0,20):product.name;
 
   const navCart=useNavigate()
   const navProduct=useNavigate()
@@ -29,12 +30,12 @@ const ProductList = ({ product }) => {
       <div>
         <img
           className="w-96 h-60 object-cover rounded"
-          src={product.pic} 
-          alt={product.name} 
+          src={product.image.url} 
+          alt={name} 
         />
       </div>
       <div className="p-1 tracking-wide">
-        <h3 className="font-bold text-lg">{product.name}</h3>
+        <h3 className="font-bold text-lg">{name}</h3>
         <p>
           <span>Price: </span>{product.amt}
         </p>

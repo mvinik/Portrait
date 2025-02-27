@@ -8,16 +8,17 @@ const DigProducts = ({ product }) => {
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
   const jwt = localStorage.getItem('jwt'); // Retrieve JWT token from localStorage
 
-    const data1 = {
-      users_permissions_user : user.documentId,  
-      paint: product.documentId,    
-      qty: 1                 
-    };  // Add product to cart and send POST request
   const addCart = async () => {
     if (!user) {
       alert("User not logged in.");
       return;
     }
+
+    const data1 = {
+      users_permissions_user: user.documentId,
+      paint: product.documentId,
+      qty: 1
+    };   // Add product to cart and send POST request
 
 
 
@@ -58,7 +59,7 @@ const DigProducts = ({ product }) => {
     }
   };
 console.log(product)
-console.log(data1)
+// console.log(data1)
   return (
     <div>
       <div className='bg-teal-600 w-80 p-5 rounded'>

@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-//import axios from 'axios'; // Import Axios
-import HMProducts from '../Components/HMProducts';
 import { useQuery } from '@tanstack/react-query';
 import DigProducts from '../Components/DigProducts';
 
-const Handmade = () => {
+const Digital = () => {
 
   const fetchProducts = async () => {
     const res = await fetch('https://test4-ayw7.onrender.com/api/paints?filters[type][$eq]=digital&populate=image');
@@ -17,8 +14,8 @@ const Handmade = () => {
   };
 
   const { data: products, error, isLoading } = useQuery({
-    queryKey: ['products'],  // Query key
-    queryFn: fetchProducts,  // The query function
+    queryKey: ['products'], 
+    queryFn: fetchProducts, 
   });
 
   if (isLoading) {
@@ -87,7 +84,7 @@ const Handmade = () => {
           </div>
 
           {/* Products */}
-          <div className='grid md:grid-cols-2 m-10 gap-5'>
+          <div className='grid md:grid-cols-2 m-20 gap-5'>
             {products.map((product) => (
               <DigProducts key={product.id} product={product} />
             ))}
@@ -99,4 +96,4 @@ const Handmade = () => {
   );
 };
 
-export default Handmade;
+export default Digital;
