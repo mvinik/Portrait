@@ -27,6 +27,7 @@ const CartPage = () => {
 
     fetchCartData();
   }, [setCart]);
+  
 
   const handleDelete = async (id) => {
     try {
@@ -64,7 +65,7 @@ const CartPage = () => {
             className="w-full md:w-1/4 p-4 border m-2 border-gray-500 rounded shadow-lg"
           >
             <div>
-              <img src={cartItem.paint.image.url} alt="" />
+              <img src={cartItem.paint.image?.url} alt="" />
               <h3 className="font-medium text-lg">{cartItem.paint.name}</h3>
               <p className="text-md text-gray-700">{cartItem.paint.price}</p>
               <button

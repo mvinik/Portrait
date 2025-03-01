@@ -1,0 +1,28 @@
+/* Custom CSS for the inner border effect */
+.button-with-inner-border {
+    position: relative;
+    color: #1fb69d;
+   
+    border: 1px solid #1fb69d;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .button-with-inner-border::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border-radius: 1px;
+    border: 1px solid #1fb69d;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .button-with-inner-border:hover::after {
+    opacity: 1;
+  }
+  

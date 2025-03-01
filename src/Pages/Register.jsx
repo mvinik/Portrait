@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import validate from '../Components/Validate';
 
@@ -11,7 +11,16 @@ const Register = () => {
   });
 
   const [error, setError] = useState({});
+  //useref for the input  fields
+  const usernameRef=useRef()
+  const emailRef=useRef()
+  const passwordRef=useRef()
 
+  const handleKeyPress=(e,nextRef)=>{
+    if(e.key === 'Enter'){
+      nextRef.current.focus()
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate(regData);
@@ -68,6 +77,8 @@ const Register = () => {
             placeholder="User Name"
             type="text"
             name="username"
+            ref={usernameRef}
+            onKeyDown={(e)=>handleKeyPress(e,emailRef)}
             value={regData.username}
             onChange={handleChange}
             className="p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200"
@@ -79,6 +90,9 @@ const Register = () => {
             placeholder="Email"
             type="email"
             name="email"
+            ref={emailRef}
+            onKeyDown={(e)=>handleKeyPress(e,passwordRef)
+            }
             value={regData.email}
             onChange={handleChange}
             className="p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200"
@@ -90,6 +104,7 @@ const Register = () => {
             placeholder="Password"
             type="password"
             name="password"
+            ref={passwordRef}
             value={regData.password}
             onChange={handleChange}
             className="p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200"

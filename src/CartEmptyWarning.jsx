@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 export default function CartEmptyWarning() {
     return (<>
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex p-10  flex-col justify-center items-center">
             <Link to="/">
                 <button>
                     <img
@@ -11,7 +11,9 @@ export default function CartEmptyWarning() {
                     />
                 </button>
             </Link>
-            <p className="text-lg text-center pl-3 font-bold text-teal-800">Your Cart is Empty!</p>
+            {/* <p className="text-lg text-center pl-3 font-bold text-teal-800">Your Cart is Empty!</p> */}
+            <p className='p-5 text-center text-xl tracking-wider text-gray-500'>Your Cart is Empty!</p>
+          
         </div>
     </>)
 }

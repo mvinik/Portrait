@@ -1,37 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import data from '../Assets/product.json';  // Your product data
+import { useNavigate } from 'react-router-dom';
 
 const Search = ({ isOpen, closeSearchBar }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navDetails=useNavigate(); // For navigating to product details page
 
-  // Filter products based on query when the search bar is opened
+  // Fetch and filter products based on query when search bar is opened
   useEffect(() => {
-    if (isOpen) {
-      // If there's no query, show "No results found"
-      if (query === '') {
-        setResults([]); // No query means no results to show
-      } else {
-        // Filter products when query is not empty
-          const filteredResults = data.filter((product) => {
-          const amtAsString = product.amt ? String(product.amt) : '';
+    if (isOpen && query !== '') {
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch('https://test4-ayw7.onrender.com/api/paints?populate=image');
+          if (!response.ok) {
+            throw new Error('Failed to fetch products');
+          }
+          const data = await response.json();
           
-          // Check if any field matches the query (case-insensitive)
-          const matchesName = product.name.toLowerCase().includes(query.toLowerCase());
-          const matchesPic = product.pic && product.pic.toLowerCase().includes(query.toLowerCase());
-          const matchesAmt = amtAsString.toLowerCase().includes(query.toLowerCase());
+          // Filter products based on query
+          const filteredResults = data.data
+            .map((product) => ({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              imageUrl: product.image.url
+            }))
+            .filter((product) => {
+              const matchesName = product.name.toLowerCase().includes(query.toLowerCase());
+              const matchesPrice = product.price.toLowerCase().includes(query.toLowerCase());
+              return matchesName || matchesPrice;
+            });
 
-          return matchesName || matchesPic || matchesAmt;
-        });
+          setResults(filteredResults);
+          setLoading(false);
+        } catch (error) {
+          setError(error.message);
+          setLoading(false);
+        }
+      };
 
-        setResults(filteredResults); // Update results based on the filter
-      }
+      fetchData();
+    } else {
+      setResults([]); // Reset results if query is empty
     }
-  }, [query, isOpen]); // Dependency on both query and isOpen
+  }, [isOpen, query]); // Re-fetch when `isOpen` or `query` changes
 
   // Handle search input change
   const handleSearchChange = (e) => {
     setQuery(e.target.value);
+  };
+
+  // Navigate to the product details page
+  const handleProductClick = () => {
+    navDetails(`/product/${results.documentId}`); // Assuming your route is something like `/product/:id`
   };
 
   return (
@@ -57,20 +81,21 @@ const Search = ({ isOpen, closeSearchBar }) => {
 
       {/* Display Search Results */}
       <div className="p-4">
+        {loading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
         {results.length > 0 ? (
           <ul>
             {results.map((result, index) => (
-              <li key={index} className="py-2">
-                <img src={result.pic} alt={result.name} className="w-full h-32 object-cover mb-2" />
-                <strong>{result.name}</strong>: {result.amt}
-                <p>{result.description}</p>
+              <li key={index} className="py-2 cursor-pointer" onClick={() => handleProductClick(result.documentId)}>
+                <img src={result.imageUrl} alt={result.name} className="w-full h-32 object-cover mb-2" />
+                <strong>{result.name}</strong>: {result.price}
               </li>
             ))}
           </ul>
         ) : query === '' ? (
-          <p></p> // Show this if the query is empty and there are no results
+          <p>Start typing to search...</p>
         ) : (
-          <p>No results found.</p> // Show this if there are no results that match the query
+          <p>No results found.</p>
         )}
       </div>
     </div>

@@ -9,12 +9,12 @@ import Handmade from './Pages/Handmade';
 import Digital from './Pages/Digital';
 import OurStory from './Pages/OurStory';
 import Register from './Pages/Register';
-import WishList from './Components/WishList';
+
 import Cart2 from './Components/CartPage';
 import CartProvider from './Components/CartProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PetPortraits from './Components/PetPortraits';
-
+import Productdetails from './productdetails';
 // Creating a new QueryClient instance
 const queryClient= new QueryClient()
 
@@ -37,12 +37,12 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/handmade" element={<Handmade />} />  
               <Route path="/digital" element={<Digital />} />
-              <Route path="/wish" element={<WishList />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/ourstory" element={<OurStory />} />
               <Route path="/cartpage" element={<Cart2/>} />
               <Route path='/pet' element={<PetPortraits/>}/>
+              <Route path='/productdetails/:id' element={<Productdetails/>}/>
             </Routes>
 
            

@@ -1,13 +1,22 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 const Login = () => {
   const navHome=useNavigate()
   //  const [values,setValues]=useState({
   //   email:'',
   //   password:''
   //  })
+  const usernameRef=useRef()
+ const passwordRef =useRef()
 
+ const handleKeyPress=(e,nextRef)=>{
+  if(e.key === 'Enter'){
+    nextRef.current.focus();
+  }
+
+ }
    const handleSubmit = async (e) => {
     e.preventDefault();
     const username = e.target.username.value;
@@ -47,19 +56,22 @@ const Login = () => {
           // onChange={(e)=>{setValues({...values,email:e.target.value})}}
             type='text'
             name='username'
+            ref={usernameRef}
+            onKeyDown={(e)=>handleKeyPress(e,passwordRef)}
             className='p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200' />
           <br />
           <input placeholder='Password'
           // onChange={(e)=>{setValues({...values,password:e.target.value})}}
             type="pass"
             name='password'
+            ref={passwordRef}
             className='p-2 text-lg border border-gray-200 shadow  rounded w-full m-2  focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200' />
           <br />
           <button className='bg-teal-500 w-full m-2 p-2 text-white text-md tracking-wider font-bold rounded hover:bg-teal-300 transition duration-300 '>LOGIN</button>
 
         </div>
        </form>
-        <p className='p-5 text-center text-lg  text-gray-500'><span>New Customer?</span><Link path to="/register" className='hover:underline '>Create an account</Link></p>
+        <p className='p-5 text-center text-lg  text-gray-500'><span>New Customer? </span><Link path to="/register" className='hover:underline '>Create an account</Link></p>
       </div>
     
      {/* <span>https://test4-ayw7.onrender.com/api/auth/local</span> */}

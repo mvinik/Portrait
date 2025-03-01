@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 export default function Page() {
     return (<>
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex p-10 flex-col justify-center items-center">
             <Link to="/">
                 <button>
                     <img
@@ -10,8 +10,10 @@ export default function Page() {
                         className="w-50"
                     />
                 </button>
-            </Link>
-            <p className="text-lg text-center pl-3 font-bold text-teal-800">Please <a href='/login'>Login</a> to view Your cart!</p>
+            </Link> {/* <p className="text-lg text-center pl-3 font-bold text-teal-800">Please <a href='/login'>Login</a> to view Your cart!</p>
+            */}
+            <p className='p-5 text-center text-lg  text-gray-500'><span>Please </span><a className='hover:underline hover:text-teal-800' href='/login'>Login</a>  to view Your cart!</p>
+       
         </div>
     </>)
 }
