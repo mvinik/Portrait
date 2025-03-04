@@ -1,32 +1,55 @@
-import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { assets } from './Assets/assets';
-import { cartContext } from './Components/CartProvider';
-import Search from './Pages/Search';
-import MobileMenu from './Components/MobileMenu';  // Import the MobileMenu component
 import { useFeedback } from './FeedbackContext';
+import axios from 'axios';
+import MobileMenu from './Components/MobileMenu';  // Import the MobileMenu component
+import Search from './Pages/Search';
+
 function Header() {
-  const{cartlen} =useFeedback()
-  // const { cart } = useContext(cartContext);
+  const { cartlen, setCartLen } = useFeedback(); // Global cart quantity
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const navigate = useNavigate();  // Hook for redirection after logout
+  const navigate = useNavigate();
 
   // Toggle for mobile menu
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const openSearchBar = () => setIsSearchOpen(true);
   const closeSearchBar = () => setIsSearchOpen(false);
 
-  // Retrieve user from localStorage
-  const user = JSON.parse(localStorage.getItem('user'));
+  // Fetch cart data and calculate total quantity & price
+  useEffect(() => {
+    const fetchCartData = async () => {
+      if (user) {
+        try {
+          const response = await axios.get(
+            `https://test4-ayw7.onrender.com/api/paintcarts?filters[users_permissions_user][documentId]=${user.documentId}&populate=paint.image&populate=users_permissions_user`
+          );
+          setCart(response.data.data);
+
+          // Recalculate total quantity and total price
+          const totalQty = response.data.data.reduce((acc, curr) => acc + curr.qty, 0);
+          const totalPrice = response.data.data.reduce((acc, curr) => acc + parseFloat(curr.paint.price) * curr.qty, 0);
+
+          // Update global state
+          setCartLen(totalQty);
+          setTotal(totalPrice);
+        } catch (err) {
+          console.error('Error fetching cart data', err);
+        }
+      }
+    };
+
+    fetchCartData();
+  }, [user, setCartLen]); // Runs when `user` or `setCartLen` changes
 
   // Logout functionality
   const handleLogout = () => {
-    // Remove user data and JWT token from localStorage
     localStorage.removeItem('user');
     localStorage.removeItem('jwt');
-
-    // Redirect the user to the login page after logging out
     navigate('/login');
   };
 
@@ -41,27 +64,16 @@ function Header() {
           </div>
           <nav>
             <ul className="hidden md:flex tracking-wide space-x-6">
-              <li>
-                <a href="/handmade" className="hover:text-yellow-300">Handmade Portraits</a>
-              </li>
-              <li>
-                <a href="/digital" className="hover:text-yellow-300">Digital Portraits</a>
-              </li>
-              <li>
-                <a href="/pet" className="hover:text-yellow-300">Pet Portraits
-                </a>
-              </li>
-              <li>
-                <a href="/ourstory" className="hover:text-yellow-300">Our Story</a>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-yellow-300">Contact</Link>
-              </li>
+              <li><a href="/handmade" className="hover:text-yellow-300">Handmade Portraits</a></li>
+              <li><a href="/digital" className="hover:text-yellow-300">Digital Portraits</a></li>
+              <li><a href="/pet" className="hover:text-yellow-300">Pet Portraits</a></li>
+              <li><a href="/ourstory" className="hover:text-yellow-300">Our Story</a></li>
+              <li><Link to="/contact" className="hover:text-yellow-300">Contact</Link></li>
             </ul>
           </nav>
 
           <div className="flex flex-row space-x-2 items-center">
-            <button onClick={openSearchBar} aria-label="Open Search" >
+            <button onClick={openSearchBar} aria-label="Open Search">
               <img src={assets.search} alt="search" className="w-5 h-5 filter brightness-0 invert" />
             </button>
 
@@ -69,27 +81,19 @@ function Header() {
             {user ? (
               <div className="flex items-center space-x-4">
                 <span>{user.username}</span>
-                {/* Logout button */}
-                <button 
-                
-                onClick={handleLogout}
-                className="text-white hidden md:block">
-                  Logout
-                </button>
+                <button onClick={handleLogout} className="text-white hidden md:block">Logout</button>
               </div>
             ) : (
-              <Link to="/login" >
-                
+              <Link  to="/login">
                 <img src={assets.l3} alt="login" className="w-6 h-6 hidden md:block filter brightness-0 invert" />
               </Link>
             )}
-            
+
             <button>
-              <Link to="/cartpage" >
-              
-                  <span className="absolute top-1 right-12 md:top-1 md:right-4 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
-                    {cartlen}
-                  </span>
+              <Link to="/cartpage">
+                <span className="absolute top-1 right-12 md:top-1 md:right-4 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
+                  {cartlen}
+                </span>
                 <img src={assets.c1} alt="cart" className="w-5 h-5 filter brightness-0 invert" />
               </Link>
             </button>

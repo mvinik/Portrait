@@ -6,7 +6,7 @@ const ProductList = ({ product }) => {
   const navDetails = useNavigate(); // Hook to get the navigate function
 
   // const { cartproduct, setCartproduct } = useContext(cartContext);
-  const name=product.name.length > 20 ? product.name.substring(0,20):product.name;
+  const name=product.name.length > 20 ? product.name.substring(0,20)+"..":product.name;
 
   const navCart=useNavigate()
   const navProduct=useNavigate()
@@ -38,7 +38,7 @@ const ProductList = ({ product }) => {
       <div className="p-1 tracking-wide">
         <h3 className="font-bold text-lg">{name}</h3>
         <p>
-          <span>Price: </span>{product.price}
+          <span>Price: </span>{product.price}₹
         </p>
 
         <div className='flex flex-row'>

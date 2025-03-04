@@ -3,16 +3,21 @@ import { useParams } from "react-router-dom";
 import ReviewsList from "./Reviewpage";
 import './style.css';
 import axios from "axios";
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from "react-router-dom";
 
 export default function ProductDetails() {
+  const navDetails = useNavigate()
   const { id } = useParams(); // Get the product id from URL params
   const [product, setProduct] = useState(null); // State to hold the product data
   const [loading, setLoading] = useState(true); // State for loading state
+  const [cartloading, setCartLoading] = useState(false); // State for loading state
   const [error, setError] = useState(null); // State for error handling
   const [selectedImage, setSelectedImage] = useState(""); // State for the clicked image
 
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
-  
+
   useEffect(() => {
     // Function to fetch product details based on id
     const fetchProductData = async () => {
@@ -41,6 +46,15 @@ export default function ProductDetails() {
       alert("User not logged in.");
       return;
     }
+    setCartLoading(true)
+    const checkcart = await axios(`https://test4-ayw7.onrender.com/api/paintcarts?filters[paint][documentId]=${product.documentId}`)
+      if (checkcart.data.data.length > 0) {
+        console.log(checkcart.data.length)
+        navDetails('/cartpage')
+        return;
+      }
+
+    
     const data1 = {
       users_permissions_user: user.documentId,
       paint: product.documentId,
@@ -53,7 +67,8 @@ export default function ProductDetails() {
           "Content-Type": "application/json",
         },
       });
-      alert("Added to cart");
+      setCartLoading(false)
+      // alert("Added to cart");
     } catch (error) {
       console.error('Error:', error);
       alert('Error adding product to cart.');
@@ -65,7 +80,7 @@ export default function ProductDetails() {
   };
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <CircularProgress/>
   }
 
   if (error) {
@@ -88,9 +103,8 @@ export default function ProductDetails() {
                 key={index}
                 src={image?.url}
                 alt={`related-image-${index}`}
-                className={`cursor-pointer object-contain w-full mb-2 ${
-                  selectedImage === image?.url ? "border-1 border-teal-400" : ""
-                }`} // Add a border for the selected image
+                className={`cursor-pointer object-contain w-full mb-2 ${selectedImage === image?.url ? "border-1 border-teal-400" : ""
+                  }`} // Add a border for the selected image
                 onClick={() => handleImageClick(image?.url)}
                 style={{ height: "80px", borderRadius: "8px" }} // Fixed height and rounded corners
               />
@@ -114,7 +128,10 @@ export default function ProductDetails() {
             <div className="mx-auto flex flex-col justify-center">
               <button className="bg-teal-400 font-medium text-lg mt-5 p-3 rounded hover:bg-teal-200 transition"
                 onClick={addCart}>
-                Add to Cart
+
+                {cartloading? <Stack spacing={2} direction="row" style={{justifyContent:'center'}}>
+                  <CircularProgress size="30px" />
+                </Stack>:  'add to cart'}
               </button><br />
               <button className="button-with-inner-border rounded border border-teal-400 text-teal-400 text-lg font-medium my-5 p-3">
                 Save to Wishlist

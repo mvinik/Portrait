@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HMProducts from '../Components/HMProducts';
 import { useQuery } from '@tanstack/react-query';
+import CircularSize from '../loadingpage';
 
 const Handmade = () => {
 
@@ -20,7 +21,7 @@ const Handmade = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CircularSize/>
   }
 
   if (error) {

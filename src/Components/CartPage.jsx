@@ -2,20 +2,25 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Cartloginwarning from '../cartloginwarning';
 import CartEmptyWarning from '../CartEmptyWarning';
-import { cartContext } from './CartProvider';
 import { useFeedback } from '../FeedbackContext';
+import { Button, CircularProgress } from '@mui/material';
+import CircularSize from '../loadingpage';
 const CartPage = () => {
-  const{setCartLen}=useFeedback()
+  const { setCartLen } = useFeedback(); // This will allow you to update the global state for cart quantity
   const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(true); // To track loading state
+  const [loading, setLoading] = useState(true); // To track loading state for the whole cart
+  const [loadingDelete, setLoadingDelete] = useState({}); // Track loading state for each individual delete
   const [error, setError] = useState(null); // To handle errors if the request fails
   const [total, setTotal] = useState(0);
   const user = JSON.parse(localStorage.getItem('user'));
 
   // Recalculate total whenever cart is updated
   useEffect(() => {
-    setTotal(cart.reduce((acc, curr) => acc + parseFloat(curr.paint.price) * curr.qty, 0));
-  }, [cart]);
+    const totalQty = cart.reduce((acc, curr) => acc + curr.qty, 0); // Calculate total quantity
+    setCartLen(totalQty); // Set the total quantity in the global state
+    
+    setTotal(cart.reduce((acc, curr) => acc + parseFloat(curr.paint.price) * curr.qty, 0)); // Recalculate total price
+  }, [cart, setCartLen]);
 
   // Fetch cart data when the component mounts
   useEffect(() => {
@@ -31,25 +36,34 @@ const CartPage = () => {
           `https://test4-ayw7.onrender.com/api/paintcarts?filters[users_permissions_user][documentId]=${user.documentId}&populate=paint.image&populate=users_permissions_user`
         );
         setCart(response.data.data);
-        setCartLen(response.data.data.length())
-         // Set the cart items in the state
+    // Optional: Update global state initially if needed
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch cart data. Please try again later.'); // Handle error
+        setError('Failed to fetch cart data. Please try again later.');
         setLoading(false);
       }
     };
 
     fetchCartData();
-  }, [user]);
+  }, [user, setCartLen]);
 
   // Handle item deletion from the cart
   const handleDelete = async (id) => {
+    setLoadingDelete((prevState) => ({
+      ...prevState,
+      [id]: true, // Set loading state for this specific item
+    }));
+
     try {
       await axios.delete(`https://test4-ayw7.onrender.com/api/paintcarts/${id}`);
       setCart((prevCart) => prevCart.filter(item => item.documentId !== id)); // Remove item from state
     } catch (err) {
       setError('Failed to remove the product. Please try again.');
+    } finally {
+      setLoadingDelete((prevState) => ({
+        ...prevState,
+        [id]: false, // Reset loading state for this item after deletion is complete
+      }));
     }
   };
 
@@ -94,7 +108,7 @@ const CartPage = () => {
   };
 
   if (loading) {
-    return <div>Loading cart...</div>; // Display loading message or spinner
+    return <CircularSize/>
   }
 
   return (
@@ -138,19 +152,16 @@ const CartPage = () => {
                   <button
                     className="bg-red-800 text-white rounded py-1 px-3 mt-2 hover:bg-red-700 transition duration-300"
                     onClick={() => handleDelete(cartItem.documentId)} // Correct ID used here
+                    disabled={loadingDelete[cartItem.documentId]} // Disable button when deleting for this item
                   >
-                    Remove
+                    {loadingDelete[cartItem.documentId] ? 'Removing...' : 'Remove'} {/* Show loading text while deleting */}
                   </button>
                 </div>
               </div>
             ))}
           </div>
           {cart.length > 0 && <h3 className="m-10 font-bold">Total Amount: ${total}</h3>}
-        </div>
-      )}
-      {error && (
-        <div className="error-message">
-          <p>{error}</p>
+          <Button variant='contained'>checkout</Button>
         </div>
       )}
     </>

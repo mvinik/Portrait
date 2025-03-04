@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DigProducts from '../Components/DigProducts';
+import CircularSize from '../loadingpage';
 
 const Digital = () => {
 
@@ -19,7 +20,7 @@ const Digital = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CircularSize/>
   }
 
   if (error) {

@@ -1,50 +1,49 @@
 import React, { useContext, useState } from 'react';
 import { cartContext } from './CartProvider';  // Import cart context
 import { useNavigate } from 'react-router-dom';
+import { useFeedback } from '../FeedbackContext';
 import axios from 'axios';
 
 const HMProducts = ({ product }) => {
-  const [cart, setCart ]= useState([])// Access cart and setCart from context
+  const { setCartLen } = useFeedback()
+  const [cart, setCart] = useState([])// Access cart and setCart from context
   const navDetails = useNavigate();  // Hook for navigation
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
   const jwt = localStorage.getItem('jwt'); // Retrieve JWT token from localStorage
 
-  const addCart = async () => {
-    
-    if (!user) {
-      alert("User not logged in.");
-      return;
-    }
+  // const addCart = async () => {
+  //   if (!user) {
+  //     alert("User not logged in.");
+  //     return;
+  //   }
+  //   const checkcart = await axios(`https://test4-ayw7.onrender.com/api/paintcarts?filters[paint][documentId]=${product.documentId}`)
+  //   if (checkcart.data.data.length > 0) {
+  //     console.log(checkcart.data.length)
+  //     navDetails('/cartpage')
+  //     return;
+  //   }
+  //   const data1 = {
+  //     users_permissions_user: user.documentId,
+  //     paint: product.documentId,
+  //     qty: 1
+  //   };
 
-    const data1 = {
-      users_permissions_user: user.documentId,
-      paint: product.documentId,
-      qty: 1
-    };
+  //   try {
+  //     await axios.post("https://test4-ayw7.onrender.com/api/paintcarts", { data: data1 }, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
 
-    try {
-      await axios.post("https://test4-ayw7.onrender.com/api/paintcarts", { data: data1 }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  //     });
 
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error adding product to cart.');
-    }
-  };
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     alert('Error adding product to cart.');
+  //   }
+  // };
 
   // Remove product from cart
-  const removeCart = () => {
-    if (Array.isArray(cart)) {
-      console.log('Removing from cart:', product);
-      setCart(cart.filter((c) => c.id !== product.id)); // Remove product by id
-    } else {
-      console.error('Cart is not an array:', cart);
-    }
-  };
-
+ 
   const handleClick = () => {
     navDetails(`/productdetails/${product.documentId}`); // Navigate to the root URL
   };
@@ -52,7 +51,7 @@ const HMProducts = ({ product }) => {
   return (
     <div className='flex flex-wrap justify-center gap-6'>
       {product.image && product.image.length > 0 ? (
-        <div className="border border-rounded p-5 rounded flex flex-col items-center w-60">
+        <div className="border border-rounded p-5 rounded flex flex-col items-center w-60 " style={{borderColor:'GrayText'}}>
           <div onClick={handleClick} className="cursor-pointer">
             <img
               className='w-50 h-50 object-cover rounded'
@@ -61,33 +60,14 @@ const HMProducts = ({ product }) => {
             />
           </div>
 
-            <p className='text-lg text-black mt-3'>
-              <span className="font-medium text-lg">Name:</span> {product.name}
-            </p>
-            <p className='text-lg text-black font-bold'>
-              <span className="font-medium text-lg">Price:</span> {product.price}
-            </p>
+          <p className='text-lg text-black mt-3'>
+            <span className="font-medium text-lg">Name:</span> {product.name}
+          </p>
+          <p className='text-lg text-black font-bold'>
+            <span className="font-medium text-lg">Price:</span> {product.price}
+          </p>
+        </div>
 
-            <div className="mt-4">
-              {/* Check if product is already in cart */}
-              {cart.some((c) => c.id === product.id) ? (
-                <button
-                  onClick={removeCart}
-                  className="bg-red-800 rounded p-2 hover:bg-red-700 transition duration-300"
-                >
-                  Remove From Cart
-                </button>
-              ) : (
-                <button
-                  onClick={addCart}
-                  className="bg-green-800 rounded p-2 hover:bg-green-700 transition duration-300"
-                >
-                  Add to Cart
-                </button>
-              )}
-            </div>
-          </div>
-        
       ) : (
         <p>No images available</p>
       )}

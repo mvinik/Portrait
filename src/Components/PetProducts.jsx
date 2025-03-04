@@ -9,38 +9,30 @@ const PetProducts = ({ product }) => {
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
   const jwt = localStorage.getItem('jwt'); // Retrieve JWT token from localStorage
 
-  const addCart = async () => {
-    if (!user) {
-      alert("User not logged in.");
-      return;
-    }
-    const data1 = {
-      users_permissions_user: user.documentId,
-      paint: product.documentId,
-      qty: 1
-    };  // Add product to cart and send POST request
+  // const addCart = async () => {
+  //   if (!user) {
+  //     alert("User not logged in.");
+  //     return;
+  //   }
+  //   const data1 = {
+  //     users_permissions_user: user.documentId,
+  //     paint: product.documentId,
+  //     qty: 1
+  //   };  // Add product to cart and send POST request
 
-    try {
-      await axios.post("https://test4-ayw7.onrender.com/api/paintcarts", { data: data1 }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error adding product to cart.');
-    }
-  };
+  //   try {
+  //     await axios.post("https://test4-ayw7.onrender.com/api/paintcarts", { data: data1 }, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     alert('Error adding product to cart.');
+  //   }
+  // };
 
-  // Remove product from cart
-  const removeCart = () => {
-    if (Array.isArray(cart)) {
-      console.log('Removing from cart:', product);
-      setCart(cart.filter((c) => c.id !== product.id)); // Remove product by id
-    } else {
-      console.error('Cart is not an array:', cart);
-    }
-  };
+
 
   const handleClick = () => {
     navDetails(`/productdetails/${product.documentId}`); // Navigate to product details page
@@ -65,24 +57,6 @@ const PetProducts = ({ product }) => {
               <span className="font-medium text-lg">Price:</span> {product.price}
             </p>
 
-          <div className="mt-4">
-            {/* Check if product is already in cart */}
-            {cart.some((c) => c.id === product.id) ? (
-              <button
-                onClick={removeCart}
-                className="bg-red-800 rounded p-2 hover:bg-red-700 transition duration-300"
-              >
-                Remove From Cart
-              </button>
-            ) : (
-              <button
-                onClick={addCart}
-                className="bg-green-800 rounded p-2 hover:bg-green-700 transition duration-300"
-              >
-                Add to Cart
-              </button>
-            )}
-          </div>
         </div>
       ) : (
         <p>No images available</p>

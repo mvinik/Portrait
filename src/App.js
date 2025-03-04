@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PetPortraits from './Components/PetPortraits';
 import Productdetails from './productdetails';
 import { FeedbackProvider } from './FeedbackContext';
+import AdressForm from './userAdressForm';
 // Creating a new QueryClient instance
 const queryClient= new QueryClient()
 
@@ -28,12 +29,13 @@ function App() {
         {/* CartProvider and WishlistProvider wrap the entire app to share the state */}
         {/* <CartProvider> */}
           <FeedbackProvider> <BrowserRouter>
-{/*            
-           <Header /> */}
+           
+           <Header />
 
    
            <Routes>
              <Route path="/" element={<Home />} />
+             <Route path="/addressform" element={<AdressForm />} />
              <Route path="/register" element={<Register />} />
              <Route path="/handmade" element={<Handmade />} />  
              <Route path="/digital" element={<Digital />} />

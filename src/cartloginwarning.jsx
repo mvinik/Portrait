@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 export default function Page() {
     return (<>
-        <div className="flex p-10 flex-col justify-center items-center">
+        <div className="flex p-10 flex-col justify-center items-center" style={{height:'80vh'}}>
             <Link to="/">
                 <button>
                     <img
