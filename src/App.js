@@ -15,6 +15,7 @@ import CartProvider from './Components/CartProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PetPortraits from './Components/PetPortraits';
 import Productdetails from './productdetails';
+import { FeedbackProvider } from './FeedbackContext';
 // Creating a new QueryClient instance
 const queryClient= new QueryClient()
 
@@ -25,31 +26,31 @@ function App() {
         <QueryClientProvider client={queryClient}>
         
         {/* CartProvider and WishlistProvider wrap the entire app to share the state */}
-        <CartProvider>
+        {/* <CartProvider> */}
+          <FeedbackProvider> <BrowserRouter>
+{/*            
+           <Header /> */}
+
+   
+           <Routes>
+             <Route path="/" element={<Home />} />
+             <Route path="/register" element={<Register />} />
+             <Route path="/handmade" element={<Handmade />} />  
+             <Route path="/digital" element={<Digital />} />
+             <Route path="/contact" element={<Contact />} />
+             <Route path="/login" element={<Login />} />
+             <Route path="/ourstory" element={<OurStory />} />
+             <Route path="/cartpage" element={<Cart2/>} />
+             <Route path='/pet' element={<PetPortraits/>}/>
+             <Route path='/productdetails/:id' element={<Productdetails/>}/>
+           </Routes>
+
           
-          <BrowserRouter>
-           
-            <Header />
+           <Footer />
+         </BrowserRouter></FeedbackProvider>
+         
 
-    
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/handmade" element={<Handmade />} />  
-              <Route path="/digital" element={<Digital />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/ourstory" element={<OurStory />} />
-              <Route path="/cartpage" element={<Cart2/>} />
-              <Route path='/pet' element={<PetPortraits/>}/>
-              <Route path='/productdetails/:id' element={<Productdetails/>}/>
-            </Routes>
-
-           
-            <Footer />
-          </BrowserRouter>
-
-      </CartProvider>
+      {/* </CartProvider> */}
   
         </QueryClientProvider>
     </div>

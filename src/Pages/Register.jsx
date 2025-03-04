@@ -1,5 +1,6 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Toast from '../Components/Toast'; // Import the Toast component
 import validate from '../Components/Validate';
 
 const Register = () => {
@@ -11,16 +12,21 @@ const Register = () => {
   });
 
   const [error, setError] = useState({});
-  //useref for the input  fields
-  const usernameRef=useRef()
-  const emailRef=useRef()
-  const passwordRef=useRef()
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState(''); // 'success' or 'error'
+  const [showToast, setShowToast] = useState(false); // Control the visibility of the toast
 
-  const handleKeyPress=(e,nextRef)=>{
-    if(e.key === 'Enter'){
-      nextRef.current.focus()
+  // useref for the input fields
+  const usernameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const handleKeyPress = (e, nextRef) => {
+    if (e.key === 'Enter') {
+      nextRef.current.focus();
     }
-  }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate(regData);
@@ -47,14 +53,21 @@ const Register = () => {
         throw new Error(data.error.message); // If error occurs, throw it
       }
 
-      // Store JWT token and user data in sessionStorage
+      // Store JWT token and user data in localStorage
       localStorage.setItem('jwt', data.jwt);
       localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Set success message and show the toast
+      setToastMessage('Registration Successful! Please log in.');
+      setToastType('success');
+      setShowToast(true);
 
       // Redirect to login page after successful registration
       navLogin('/login');
     } catch (err) {
-      setError({ general: err.message }); // Handle the error
+      setToastMessage(`Error: ${err.message}`);
+      setToastType('error');
+      setShowToast(true); // Show the toast with error message
     }
   };
 
@@ -66,8 +79,12 @@ const Register = () => {
     }));
   };
 
+  const handleCloseToast = () => {
+    setShowToast(false);
+  };
+
   return (
-    <div className="w-96 h-96 mx-auto mx-20 mt-15 mb-35 items-center">
+    <div className="w-96 h-96 mx-auto mx-20 mt-20 mb-35 items-center">
       <h1 className="text-center text-gray-400 text-5xl font-thin">Register</h1>
       <p className="p-5 text-center text-lg text-gray-500">Please fill in the fields below.</p>
 
@@ -78,12 +95,12 @@ const Register = () => {
             type="text"
             name="username"
             ref={usernameRef}
-            onKeyDown={(e)=>handleKeyPress(e,emailRef)}
+            onKeyDown={(e) => handleKeyPress(e, emailRef)}
             value={regData.username}
             onChange={handleChange}
             className="p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200"
           />
-          {error.username && <p>{error.username}</p>}
+          {error.username && <p className='text-red-500'>{error.username}</p>}
           <br />
 
           <input
@@ -91,13 +108,12 @@ const Register = () => {
             type="email"
             name="email"
             ref={emailRef}
-            onKeyDown={(e)=>handleKeyPress(e,passwordRef)
-            }
+            onKeyDown={(e) => handleKeyPress(e, passwordRef)}
             value={regData.email}
             onChange={handleChange}
             className="p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200"
           />
-          {error.email && <p>{error.email}</p>}
+          {error.email && <p className='text-red-500'>{error.email}</p>}
           <br />
 
           <input
@@ -109,7 +125,7 @@ const Register = () => {
             onChange={handleChange}
             className="p-2 text-lg border border-gray-200 shadow rounded w-full m-2 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-200"
           />
-          {error.password && <p>{error.password}</p>}
+          {error.password && <p className='text-red-500'>{error.password}</p>}
           <br />
           <button className="bg-teal-500 w-full m-2 p-2 text-white text-md tracking-wider font-bold rounded hover:bg-teal-300 transition duration-300">
             CREATE ACCOUNT
@@ -117,9 +133,19 @@ const Register = () => {
           <br />
         </div>
       </form>
+
       <p className="text-lg p-5 text-gray-500 text-center">
         Already have an account? <Link className="hover:underline" to="/login">Login</Link>
       </p>
+
+      {/* Conditionally render the Toast if showToast is true */}
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={handleCloseToast}
+        />
+      )}
     </div>
   );
 };

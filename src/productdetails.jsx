@@ -82,7 +82,7 @@ export default function ProductDetails() {
         {/* Flexbox to arrange three divs in a row */}
         <div className="flex flex-col mt-10 md:flex-row gap-8">
           {/* First div: Related images (with conditional styling to highlight selected image) */}
-          <div className="w-full md:w-1/4 flex flex-col gap-4">
+          <div className="w-full md:w-1/10 flex flex-col gap-4">
             {product.image?.map((image, index) => (
               <img
                 key={index}

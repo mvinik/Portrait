@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { cartContext } from './CartProvider';  // Import cart context
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const HMProducts = ({ product }) => {
-  const { cart, setCart } = useContext(cartContext);  // Access cart and setCart from context
+  const [cart, setCart ]= useState([])// Access cart and setCart from context
   const navDetails = useNavigate();  // Hook for navigation
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
   const jwt = localStorage.getItem('jwt'); // Retrieve JWT token from localStorage
 
   const addCart = async () => {
+    
     if (!user) {
       alert("User not logged in.");
       return;
@@ -51,20 +52,19 @@ const HMProducts = ({ product }) => {
   return (
     <div className='flex flex-wrap justify-center gap-6'>
       {product.image && product.image.length > 0 ? (
-        product.image.map((img, index) => (
-          <div key={index} className="bg-teal-600 w-80 p-5 rounded flex flex-col md:flex-row-3 items-center">
-            <div onClick={handleClick} className="cursor-pointer">
-              <img
-                className='w-70 h-70 object-cover rounded'
-                src={img.url}
-                alt={`${product.name} image ${index + 1}`}
-              />
-            </div>
+        <div className="border border-rounded p-5 rounded flex flex-col items-center w-60">
+          <div onClick={handleClick} className="cursor-pointer">
+            <img
+              className='w-50 h-50 object-cover rounded'
+              src={product.image[0].url}
+              alt={product.name}
+            />
+          </div>
 
-            <p className='text-lg text-white mt-3'>
+            <p className='text-lg text-black mt-3'>
               <span className="font-medium text-lg">Name:</span> {product.name}
             </p>
-            <p className='text-lg text-white font-bold'>
+            <p className='text-lg text-black font-bold'>
               <span className="font-medium text-lg">Price:</span> {product.price}
             </p>
 
@@ -87,7 +87,7 @@ const HMProducts = ({ product }) => {
               )}
             </div>
           </div>
-        ))
+        
       ) : (
         <p>No images available</p>
       )}

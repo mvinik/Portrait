@@ -96,7 +96,7 @@ const ReviewsList = ({ id }) => {
 
       {/* Review Submission Form */}
       <div className="mt-6">
-        <h3>Write a Review</h3>
+        <h3 className='font-semibold'>Write a Review</h3>
         {error && <p className="text-red-500">{error}</p>}
         <form onSubmit={handleSubmitReview}>
           <textarea
@@ -107,7 +107,7 @@ const ReviewsList = ({ id }) => {
           ></textarea>
 
           <div className="rating mt-2">
-            <label className="mr-2">Rating:</label>
+            <label className="mr-2 font-semibold">Rating:</label>
             <select
               value={rating}
               onChange={(e) => setRating(Number(e.target.value))}

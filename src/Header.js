@@ -4,9 +4,10 @@ import { assets } from './Assets/assets';
 import { cartContext } from './Components/CartProvider';
 import Search from './Pages/Search';
 import MobileMenu from './Components/MobileMenu';  // Import the MobileMenu component
-
+import { useFeedback } from './FeedbackContext';
 function Header() {
-  const { cart } = useContext(cartContext);
+  const{cartlen} =useFeedback()
+  // const { cart } = useContext(cartContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();  // Hook for redirection after logout
@@ -85,11 +86,10 @@ function Header() {
             
             <button>
               <Link to="/cartpage" >
-                {cart.length > 0 && (
+              
                   <span className="absolute top-1 right-12 md:top-1 md:right-4 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
-                    {cart.length}
+                    {cartlen}
                   </span>
-                )}
                 <img src={assets.c1} alt="cart" className="w-5 h-5 filter brightness-0 invert" />
               </Link>
             </button>

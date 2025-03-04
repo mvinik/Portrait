@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const ProductList = ({ product }) => {
   const navDetails = useNavigate(); // Hook to get the navigate function
 
-  const { cartproduct, setCartproduct } = useContext(cartContext);
+  // const { cartproduct, setCartproduct } = useContext(cartContext);
   const name=product.name.length > 20 ? product.name.substring(0,20):product.name;
 
   const navCart=useNavigate()
@@ -27,10 +27,10 @@ const ProductList = ({ product }) => {
   };
 
   return (
-    <div onClick={handleClick} className="p-5 w-96 h-96 border m-2 border-gray-500 rounded shadow-lg">
+    <div onClick={handleClick} className="p-5 w-50 border m-10 border-gray-500 rounded shadow-lg">
       <div>
         <img
-          className="w-96 h-60 object-cover rounded"
+          className="w-50 h-40 object-cover rounded"
           src={product.image[0]?.url} 
           alt={name} 
         />
@@ -43,11 +43,11 @@ const ProductList = ({ product }) => {
 
         <div className='flex flex-row'>
           <section className='w-2/3'>
-
+{/* 
         <button onClick={()=>navProduct('/products')}
-         className="bg-green-800 rounded p-2 mt-1 hover:bg-green-700 transition duration-300"
+         className="bg-green-800 rounded p-2 my-1 hover:bg-green-700 transition duration-300"
           
-          >ORDER NOW</button>
+          >ORDER NOW</button> */}
           </section>
 
         </div>
