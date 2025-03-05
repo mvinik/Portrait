@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PetProducts from './PetProducts';
 import { useQuery } from '@tanstack/react-query';
+import CircularSize from '../loadingpage';
 
 const PetPortraits=()=>{
 
@@ -20,7 +21,7 @@ const { data: products, error, isLoading } = useQuery({
 });
 
 if (isLoading) {
-    return <div>Loading...</div>;
+    return <CircularSize/>
 }
 
 if (error) {

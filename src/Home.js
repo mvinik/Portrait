@@ -1,11 +1,12 @@
 import { assets } from "./Assets/assets";
 import React from 'react'
-import HowItWorks from "./Components/HowItWorks";
+
 import ProductList from "./Components/ProductList";
 import { useQuery } from "@tanstack/react-query";
 import { Snackbar } from '@mui/material';
 import { useFeedback } from './FeedbackContext';
 import MuiAlert from '@mui/material/Alert';
+import CircularSize from "./loadingpage";
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} style={{color:'white',backgroundColor:'#3775d1',borderRadius:'8px'}} ref={ref} variant="filled" {...props} />;
   });
@@ -27,7 +28,7 @@ const Home = () => {
     });
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <CircularSize/>
     }
 
     if (error) {
@@ -41,7 +42,7 @@ const Home = () => {
                 <section className="bg-white-800 mt-16 leading-10 text-black text-center ">
                     <h1 className="text-4xl font-thin ">Custom Portrait Drawings, Created Just For You</h1>
                     <p className="text-lg mt-4">Turn your favorite memories into beautiful art pieces with our professional artists.</p>
-                    <button className="mt-6 px-6 py-3 bg-yellow-400 text-black rounded-full hover:bg-yellow-500 transition">Order Your Portrait</button>
+                    {/* <button className="mt-6 px-6 py-3 bg-yellow-400 text-black rounded-full hover:bg-yellow-500 transition">Order Your Portrait</button> */}
                 </section>
 
                 <div className='mx-auto' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>

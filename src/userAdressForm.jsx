@@ -3,35 +3,64 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
 import axios from 'axios';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
+
+
 export default function AddressForm() {
-  const [country, setCountry] = React.useState([]);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const jwt = localStorage.getItem('jwt')
+  const [formData, setFormData] = React.useState({
+    address: '',
+  });
 
-  React.useEffect(() => {
-    function fetchCountry() {
-      axios
-        .get('https://restcountries.com/v3.1/all')
-        .then((res) => setCountry(res.data)) // axios already parses the JSON response
-        .catch((error) => console.error('Error fetching country data:', error));
+
+
+  async function updateAddress() {
+    try {
+      const response = await axios.put(
+        `https://test4-ayw7.onrender.com/api/users/${user.id}`,  // Ensure user.id is valid
+        formData,  // Send formData directly, not { formData }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${jwt}`  // Add "Bearer " before token
+          }
+        }
+      );
+      localStorage.setItem("user", JSON.stringify(response.data))
+
+      console.log("Update Successful:", response.data);
+    } catch (error) {
+      console.error("Error updating address:", error.response?.data || error.message);
     }
+  }
+  
 
-    fetchCountry(); // Call the fetch function
-  }, []); // Empty dependency array to run only once after the initial render
+
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form Data:', formData);
+  };
 
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit}
       sx={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '70vh', // Full viewport height to center vertically
+        height: '70vh',
         '& > :not(style)': {
           m: 1,
           width: '40ch',
@@ -40,29 +69,16 @@ export default function AddressForm() {
       noValidate
       autoComplete="off"
     >
-      <Typography  style={{ textAlign:'center'}}>
-        Fill address
-      </Typography>
-      <TextField id="outlined-basic" label="Address Line 1" variant="outlined" />
-      <TextField id="outlined-basic" label="Address Line 2" variant="outlined" />
-      <TextField id="outlined-basic" label="City" variant="outlined" />
-      <TextField id="outlined-basic" label="State" variant="outlined" />
-      <TextField id="outlined-basic" label="Postal Code" variant="outlined" />
-      <FormControl fullWidth sx={{ marginTop: 2 }}>
-        <InputLabel id="demo-simple-select-label">Country</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Country"
-        >
-          {country.map((e) => (
-            <MenuItem key={e.name.common} value={e.name.common}>
-              {e.name.common}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <Button variant="contained" sx={{ marginTop: 2 }}>
+      <Typography style={{ textAlign: 'center' }}>Fill Address</Typography>
+      <TextField
+        label="Address"
+        variant="outlined"
+        name="address"
+        value={formData.address}
+        onChange={handleChange}
+      />
+
+      <Button type="submit" variant="contained" onClick={updateAddress} sx={{ marginTop: 2 }}>
         Proceed
       </Button>
     </Box>

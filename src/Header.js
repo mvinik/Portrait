@@ -9,6 +9,7 @@ import Search from './Pages/Search';
 function Header() {
   const { cartlen, setCartLen } = useFeedback(); // Global cart quantity
   const user = JSON.parse(localStorage.getItem('user'));
+  const jwt = localStorage.getItem('jwt')
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,6 +38,7 @@ function Header() {
           // Update global state
           setCartLen(totalQty);
           setTotal(totalPrice);
+
         } catch (err) {
           console.error('Error fetching cart data', err);
         }
@@ -55,54 +57,61 @@ function Header() {
 
   return (
     <>
-      <header className="sticky top-0 bg-teal-600 text-white p-4 shadow-lg z-10">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-semibold">
-            <a href="/">
-              <span className="text-yellow-300">My</span>Portraits
-            </a>
-          </div>
-          <nav>
-            <ul className="hidden md:flex tracking-wide space-x-6">
-              <li><a href="/handmade" className="hover:text-yellow-300">Handmade Portraits</a></li>
-              <li><a href="/digital" className="hover:text-yellow-300">Digital Portraits</a></li>
-              <li><a href="/pet" className="hover:text-yellow-300">Pet Portraits</a></li>
-              <li><a href="/ourstory" className="hover:text-yellow-300">Our Story</a></li>
-              <li><Link to="/contact" className="hover:text-yellow-300">Contact</Link></li>
-            </ul>
-          </nav>
+      <header className="sticky h-20 top-0 bg-teal-600  text-white p-4 shadow-lg  mx-auto flex justify-between items-center z-10">
 
-          <div className="flex flex-row space-x-2 items-center">
-            <button onClick={openSearchBar} aria-label="Open Search">
-              <img src={assets.search} alt="search" className="w-5 h-5 filter brightness-0 invert" />
-            </button>
-
-            {/* Conditionally render login/logout button */}
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <span>{user.username}</span>
-                <button onClick={handleLogout} className="text-white hidden md:block">Logout</button>
-              </div>
-            ) : (
-              <Link  to="/login">
-                <img src={assets.l3} alt="login" className="w-6 h-6 hidden md:block filter brightness-0 invert" />
-              </Link>
-            )}
-
-            <button>
-              <Link to="/cartpage">
-                <span className="absolute top-1 right-12 md:top-1 md:right-4 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
-                  {cartlen}
-                </span>
-                <img src={assets.c1} alt="cart" className="w-5 h-5 filter brightness-0 invert" />
-              </Link>
-            </button>
-
-            <button onClick={toggleMenu} aria-label="Toggle Mobile Menu">
-              <img src={assets.menu} alt="menu" className="md:hidden w-6 h-6 filter brightness-0 invert" />
-            </button>
-          </div>
+        <div className="text-2xl font-semibold">
+          <a href="/">
+            <span className="text-yellow-300">My</span>Portraits
+          </a>
         </div>
+        <nav>
+          <ul className="hidden md:flex tracking-wide space-x-6">
+            <li><a href="/handmade" className="hover:text-yellow-300">Handmade Portraits</a></li>
+            <li><a href="/digital" className="hover:text-yellow-300">Digital Portraits</a></li>
+            <li><a href="/pet" className="hover:text-yellow-300">Pet Portraits</a></li>
+            <li><a href="/ourstory" className="hover:text-yellow-300">Our Story</a></li>
+            <li><Link to="/contact" className="hover:text-yellow-300">Contact</Link></li>
+          </ul>
+        </nav>
+
+        <div className="flex flex-row space-x-6 items-center">
+          <button onClick={openSearchBar} aria-label="Open Search" className='justify-center items-center cursor-pointer'>
+            <img src={assets.search} alt="search" className="w-5 h-5 filter brightness-0 invert" />
+            <h4>Search</h4>
+          </button>
+
+          {/* Conditionally render login/logout button */}
+          {user ? (
+            <div className=" flex flex-col items-center cursor-pointer">
+              <span>{user.username}</span>
+              <button onClick={handleLogout} className="text-white">
+
+                Logout</button>
+            </div>
+          ) : (
+            <button>
+              <Link to="/login">
+                <img src={assets.l3} alt="login" className="w-6 h-6 filter brightness-0 invert" />
+                <h4>Profile</h4>
+              </Link>
+            </button>
+          )}
+
+          <button>
+            <Link to="/cartpage" className='flex-col items-center  justify-center'>
+              <span className="absolute top-1 right-12 md:top-1 md:right-8 bg-yellow-500 text-teal-800 text-xs rounded-full px-2 py-1">
+                {cartlen}
+              </span>
+              <img src={assets.c1} alt="cart" className="w-5 h-5 filter brightness-0 invert" />
+              <h4>Cart</h4>
+            </Link>
+          </button>
+
+          <button onClick={toggleMenu} aria-label="Toggle Mobile Menu cursor-pointer">
+            <img src={assets.menu} alt="menu" className="md:hidden w-6 h-6 filter brightness-0 invert" />
+          </button>
+        </div>
+
       </header>
 
       {/* Pass the state and toggle function to the MobileMenu component */}

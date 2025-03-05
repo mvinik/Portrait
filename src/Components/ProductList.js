@@ -9,7 +9,7 @@ const ProductList = ({ product }) => {
   const name=product.name.length > 20 ? product.name.substring(0,20)+"..":product.name;
 
   const navCart=useNavigate()
-  const navProduct=useNavigate()
+  const navProduct=useNavigate()  
 
   // Add product to cart
   // const addCart = () => {

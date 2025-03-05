@@ -1,26 +1,23 @@
 import axios from 'axios'
 import React, { useState, useRef } from 'react'
-import { useNavigate,Link } from 'react-router-dom'
-import Toast from '../Components/Toast' // Import the Toast component
+import { useNavigate, Link } from 'react-router-dom'
 import { useFeedback } from "../FeedbackContext";
 import MuiAlert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
+import { Password } from '@mui/icons-material';
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 const Login = () => {
 
 
-  const { showFeedback ,feedback} = useFeedback();
+  const { showFeedback, feedback } = useFeedback();
 
   const navHome = useNavigate()
   const usernameRef = useRef()
   const passwordRef = useRef()
 
-  // Toast state
-  const [toastMessage, setToastMessage] = useState('')
-  const [toastType, setToastType] = useState('') // 'success' or 'error'
-  const [showToast, setShowToast] = useState(false) // Control the visibility of the toast
 
   const handleKeyPress = (e, nextRef) => {
     if (e.key === 'Enter') {
@@ -29,7 +26,7 @@ const Login = () => {
   }
 
   const handleSubmit = async (e) => {
-    
+
     e.preventDefault()
     const username = e.target.username.value
     const password = e.target.password.value
@@ -56,13 +53,10 @@ const Login = () => {
       console.error(error)
 
       // Set error message and show the toast
-      showFeedback(error.message)
+      showFeedback("Invalid username or Password")
     }
   }
 
-  const handleCloseToast = () => {
-    setShowToast(false)
-  }
 
   return (
     <div className="w-96 h-96 mx-auto m-20 items-center">
@@ -70,6 +64,7 @@ const Login = () => {
       <p className="p-5 text-center text-lg text-gray-500">Please enter your email and password.</p>
       <form onSubmit={handleSubmit}>
         <div>
+
           <input
             placeholder="UserName"
             type="text"
@@ -95,19 +90,14 @@ const Login = () => {
         <Link to="/register" className="hover:underline">Create an account</Link>
       </p>
 
-      {/* Conditionally render the Toast if showToast is true */}
-      {showToast && (
-        <Toast
-          message={toastMessage}
-          type={toastType}
-          onClose={handleCloseToast}
-        />
-      )}
-                      <Snackbar open={!!feedback} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-                          <div style={{}}>
-                              <Alert  severity="success" sx={{ backgroundColor: 'green', color: 'white' }}>{feedback}</Alert>
-                          </div>
-                      </Snackbar>
+
+
+
+      <Snackbar open={!!feedback} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+        <div style={{}}>
+          <Alert severity="success" sx={{ backgroundColor: 'green', color: 'white' }}>{feedback}</Alert>
+        </div>
+      </Snackbar>
     </div>
   )
 }

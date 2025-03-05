@@ -12,6 +12,7 @@ const ReviewsList = ({ id }) => {
     // Fetch user details from local storage (or another method if needed)
     const userData = JSON.parse(localStorage.getItem('user'));
     setUser(userData); // Assuming the user is stored in localStorage
+ 
 
     // Fetch reviews when the component mounts
     fetch(`https://test4-ayw7.onrender.com/api/reviews?filters[paint][documentId][$eq]=${id}&populate=users_permissions_user`)
@@ -67,6 +68,12 @@ const ReviewsList = ({ id }) => {
     }
   };
 
+  const calculateAverageRating = () => {
+    if (reviews.length === 0) return 0;
+    const totalRating = reviews.reduce((acc, review) => acc + review.review, 0);
+    return (totalRating / reviews.length).toFixed(1); // Return the average, rounded to one decimal
+  };
+  
   if (loading) {
     return <div>Loading...</div>; // Show loading message while data is being fetched
   }
@@ -78,6 +85,12 @@ const ReviewsList = ({ id }) => {
   return (
     <div>
       <h2 className='text-4xl font-thin py-10'>Reviews</h2>
+
+      {/* Display Overall Rating */}
+      <div className="overall-rating mb-6">
+        <h3 className="font-semibold">Overall Rating: </h3>
+        <p>{'⭐'.repeat(Math.round(calculateAverageRating()))} ({calculateAverageRating()})</p>
+      </div>
 
       {/* Display reviews list */}
       <ul>

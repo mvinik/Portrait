@@ -9,7 +9,7 @@ export const FeedbackProvider = ({ children }) => {
   const [cartlen,setCartLen] = useState(0)
   const showFeedback = (message) => {
     setFeedback(message);
-    setTimeout(() => setFeedback(null), 5000); // Clear the feedback after 3 seconds
+    setTimeout(() => setFeedback(null), 2000); // Clear the feedback after 3 seconds
   };
 
   return (

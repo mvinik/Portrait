@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'; // Correct import for useNavigat
 import axios from 'axios';
 
 const PetProducts = ({ product }) => {
+  const name=product.name.length > 20 ? product.name.substring(0,20)+"..":product.name;
+
   const [cart,setCart]=useState()  // Access cart and setCart from context
   const navDetails = useNavigate();  // Hook for navigation
   const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
@@ -51,7 +53,7 @@ const PetProducts = ({ product }) => {
           </div>
 
             <p className='text-lg text-black mt-3'>
-              <span className="font-medium text-lg">Name:</span> {product.name}
+              <span className="font-medium text-lg">Name:</span> {name}
             </p>
             <p className='text-lg text-black font-bold'>
               <span className="font-medium text-lg">Price:</span> {product.price}

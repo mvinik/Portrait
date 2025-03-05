@@ -5,7 +5,11 @@ import CartEmptyWarning from '../CartEmptyWarning';
 import { useFeedback } from '../FeedbackContext';
 import { Button, CircularProgress } from '@mui/material';
 import CircularSize from '../loadingpage';
+import StripeCheckout from 'react-stripe-checkout';
+import { Margin } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 const CartPage = () => {
+  const navgate = useNavigate()
   const { setCartLen } = useFeedback(); // This will allow you to update the global state for cart quantity
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true); // To track loading state for the whole cart
@@ -18,7 +22,7 @@ const CartPage = () => {
   useEffect(() => {
     const totalQty = cart.reduce((acc, curr) => acc + curr.qty, 0); // Calculate total quantity
     setCartLen(totalQty); // Set the total quantity in the global state
-    
+
     setTotal(cart.reduce((acc, curr) => acc + parseFloat(curr.paint.price) * curr.qty, 0)); // Recalculate total price
   }, [cart, setCartLen]);
 
@@ -36,7 +40,7 @@ const CartPage = () => {
           `https://test4-ayw7.onrender.com/api/paintcarts?filters[users_permissions_user][documentId]=${user.documentId}&populate=paint.image&populate=users_permissions_user`
         );
         setCart(response.data.data);
-    // Optional: Update global state initially if needed
+        // Optional: Update global state initially if needed
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch cart data. Please try again later.');
@@ -96,6 +100,8 @@ const CartPage = () => {
         }
         return item;
       });
+
+
     });
 
     try {
@@ -108,7 +114,29 @@ const CartPage = () => {
   };
 
   if (loading) {
-    return <CircularSize/>
+    return <CircularSize />
+  }
+
+
+
+  async function handelcheckout() {
+    // console.log(user)
+    if (!user.address) {
+      navgate('/addressform')
+    }
+    const createorder = {
+      users_permissions_user: user.documentId,
+      delivery_address: user.address,
+      order_status: 'pending',
+      payment_status: 'success',
+      total_amount: total
+
+    }
+    const response = await axios.post('https://test4-ayw7.onrender.com/api/orders', { data: createorder })
+    const response1 = await axios.post('https://test4-ayw7.onrender.com/api/orderitems/bulk-create', { data: cart.map((e) => ({ paint: e.paint.documentId, qty: e.qty, order: response.data.data.documentId })) })
+    console.log(response)
+    console.log(response1)
+
   }
 
   return (
@@ -161,7 +189,9 @@ const CartPage = () => {
             ))}
           </div>
           {cart.length > 0 && <h3 className="m-10 font-bold">Total Amount: ${total}</h3>}
-          <Button variant='contained'>checkout</Button>
+          <Button variant='contained' sx={{ margin: "25px" }} onClick={handelcheckout}  >checkout</Button>
+          {/* <StripeCheckout name='MyPortrait' amount={product.price}>
+          </StripeCheckout> */}
         </div>
       )}
     </>
