@@ -17,6 +17,8 @@ import Productdetails from './productdetails';
 import { FeedbackProvider } from './FeedbackContext';
 import AdressForm from './userAdressForm';
 import MyOrders from './MyOrders';
+import PlacingOrderPage from './Pages/PlacingOrderPage';
+import OrderSuccessPage from './Components/OrderSuccessPage';
 // Creating a new QueryClient instance
 const queryClient= new QueryClient()
 
@@ -45,6 +47,8 @@ function App() {
              <Route path="/ourstory" element={<OurStory />} />
              <Route path="/cartpage" element={<Cart2/>} />
              <Route path='/pet' element={<PetPortraits/>}/>
+             <Route path='/placeorder' element={<PlacingOrderPage/>}/>
+             <Route path='/ordersuccesspage' element={< OrderSuccessPage/>}/>
              <Route path='/productdetails/:id' element={<Productdetails/>}/>
            </Routes>
 

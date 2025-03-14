@@ -56,11 +56,9 @@ function MobileMenu({ isMenuOpen, toggleMenu }) {
               </a>
             </li>
            
-            <li>
-              <Link to="/contact" className="hover:text-teal-800 transition duration-300">
-                Contact
-              </Link>
-            </li>
+      
+            <li><a href="/myorders" className="hover:text-yellow-300">My Orders</a></li>
+           
             <li>
               <Link to="/products" className="hover:text-teal-800 transition duration-300">
                 Products

@@ -24,7 +24,7 @@ export default function ProductDetails() {
       try {
         const response = await fetch(`https://test4-ayw7.onrender.com/api/paints/${id}?populate=image`);
         const data = await response.json();
-
+          console.log(data,'Response')
         if (response.ok) {
           setProduct(data.data); // Assuming 'data' contains the product
           setSelectedImage(data.data.image[0].url); // Default to the first image as the selected image
@@ -48,11 +48,8 @@ export default function ProductDetails() {
     }
     setCartLoading(true)
     const checkcart = await axios(`https://test4-ayw7.onrender.com/api/paintcarts?filters[paint][documentId]=${product.documentId}`)
-      if (checkcart.data.data.length > 0) {
-        console.log(checkcart.data.length)
-        navDetails('/cartpage')
-        return;
-      }
+    console.log(checkcart,'check cart') 
+
 
     
     const data1 = {
@@ -61,17 +58,25 @@ export default function ProductDetails() {
       qty: 1
     };  // Add product to cart and send POST request
 
+    console.log(data1,'Data1')
     try {
-      await axios.post("https://test4-ayw7.onrender.com/api/paintcarts", { data: data1 }, {
-        headers: {
+     const res = await axios.post("https://test4-ayw7.onrender.com/api/paintcarts", { data: data1 }, {
+      headers: {
           "Content-Type": "application/json",
         },
       });
+      console.log(res,'data')
       setCartLoading(false)
       // alert("Added to cart");
     } catch (error) {
       console.error('Error:', error);
       alert('Error adding product to cart.');
+    }
+
+    if (checkcart.data.data.length > 0) {
+      console.log(checkcart.data.data.length)
+      navDetails('/cartpage')
+      return;
     }
   };
 
@@ -121,7 +126,7 @@ export default function ProductDetails() {
           </div>
 
           {/* Third div: Product details */}
-          <div className="w-full md:w-1/4">
+          <div className="w-full md:w-1/2">
             <h1 className="text-2xl font-semibold">{product.name}</h1>
             <p className="text-lg mt-2">{product.description}</p>
             <h3 className="text-xl font-bold mt-4">Price: ${product.price}</h3>

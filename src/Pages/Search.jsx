@@ -19,14 +19,15 @@ const Search = ({ isOpen, closeSearchBar }) => {
             throw new Error('Failed to fetch products');
           }
           const data = await response.json();
-          
+          {console.log(data,'data')}
           // Filter products based on query
           const filteredResults = data.data
             .map((product) => ({
               id: product.id,
               name: product.name,
               price: product.price,
-              imageUrl: product.image.url
+              imageUrl: product.image[0].url,
+              documentId:product.documentId
             }))
             .filter((product) => {
               const matchesName = product.name.toLowerCase().includes(query.toLowerCase());
@@ -54,8 +55,10 @@ const Search = ({ isOpen, closeSearchBar }) => {
   };
 
   // Navigate to the product details page
-  const handleProductClick = () => {
-    navDetails(`/product/${results.documentId}`); // Assuming your route is something like `/product/:id`
+  const handleProductClick = (Id) => {
+    navDetails(`/productdetails/${Id}`); // Assuming your route is something like `/product/:id`
+    
+    console.log(Id,'product id')
   };
 
   return (
@@ -85,8 +88,10 @@ const Search = ({ isOpen, closeSearchBar }) => {
         {error && <p>Error: {error}</p>}
         {results.length > 0 ? (
           <ul>
+            {console.log(results,'resultes')}
             {results.map((result, index) => (
-              <li key={index} className="py-2 cursor-pointer" onClick={() => handleProductClick(result.documentId)}>
+              <li key={index} className="py-2 cursor-pointer"
+               onClick={() => handleProductClick(result.documentId)}>
                 <img src={result.imageUrl} alt={result.name} className="w-full h-32 object-cover mb-2" />
                 <strong>{result.name}</strong>: {result.price}
               </li>
